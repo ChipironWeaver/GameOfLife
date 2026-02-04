@@ -17,11 +17,7 @@ public class CellManager : MonoBehaviour
     void Start()
     {
         MapCreateSize();
-        map[1, 1] = true;
-        map[1, 2] = true;
-        map[1, 3] = true;
         MapRender();
-        StartCoroutine(FixedStep(_speed));
     }
     
     private IEnumerator FixedStep(float timeStep)
@@ -64,6 +60,10 @@ public class CellManager : MonoBehaviour
         }
     }
 
+    public void StartAnimation()
+    {
+        StartCoroutine(FixedStep(_speed));
+    }
     public void MapRender()
     {
         for (int j = 0; j < _mapSize.x; j++)
