@@ -12,14 +12,14 @@ public class CellManager : MonoBehaviour
     [SerializeField] private Color _aliveColor;
     [SerializeField] private Color _deadColor;
     private GameObject[,] _cells;
-    private bool[,] _map;
+    public bool[,] map;
     
     void Start()
     {
         MapCreateSize();
-        _map[1, 1] = true;
-        _map[1, 2] = true;
-        _map[1, 3] = true;
+        map[1, 1] = true;
+        map[1, 2] = true;
+        map[1, 3] = true;
         MapRender();
         StartCoroutine(FixedStep(_speed));
     }
@@ -41,19 +41,21 @@ public class CellManager : MonoBehaviour
         cell.transform.SetParent(gameObject.transform,false);
         cell.GetComponent<RectTransform>().localPosition = new Vector3(_size.x * _position.x , _size.y * _position.y, 0);
         cell.GetComponent<RectTransform>().sizeDelta = _size;
+        cell.GetComponent<CellIndividual>().position = _position;
+        cell.GetComponent<CellIndividual>().cellManager = this;
         cell.name = "Cell " + _position.ToString();
         return cell;
     }
 
     private void MapCreateSize()
     {
-        _map = new bool[(int)_mapSize.x, (int)_mapSize.y];
+        map = new bool[(int)_mapSize.x, (int)_mapSize.y];
         _cells = new GameObject[(int)_mapSize.x, (int)_mapSize.y];
         for (int j = 0; j < _mapSize.x; j++)
         {
             for (int i = 0; i < _mapSize.y; i++)
             {
-                _map[j, i] = false;
+                map[j, i] = false;
                 if (_cells[j, i] == null)
                 {
                     _cells[j, i] = CreateCell(new  Vector2(j, i));
@@ -68,7 +70,7 @@ public class CellManager : MonoBehaviour
         {
             for (int i = 0; i < _mapSize.y; i++)
             {
-                if (_map[j, i])
+                if (map[j, i])
                 {
                     _cells[j, i].GetComponent<Image>().color = _aliveColor;
                 }
@@ -89,7 +91,7 @@ public class CellManager : MonoBehaviour
             {
                 if (x >= 0 && x < _mapSize.x && y >= 0 && y < _mapSize.y && new Vector2(x , y) != _centerposition)
                 {
-                    if (_map[x, y] )
+                    if (map[x, y] )
                     {
                         _neighbours++;
                     }
@@ -107,7 +109,7 @@ public class CellManager : MonoBehaviour
             for (int y = 0; y < _mapSize.y; y++)
             {
                 int _neighbours = CheckNeighbours(new Vector2(x, y));
-                if (_map[x, y])
+                if (map[x, y])
                 {
                     if (_neighbours == 0){ _tempmap[x, y] = false;}
                     if (_neighbours >= 2){ _tempmap[x, y] = true;}
@@ -119,6 +121,6 @@ public class CellManager : MonoBehaviour
                 }
             }
         }
-        _map = _tempmap;
+        map = _tempmap;
     }
 }

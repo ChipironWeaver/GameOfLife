@@ -120,7 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8207445568632769716}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5184252600327775167}
+        m_TargetAssemblyTypeName: CellIndividual, Assembly-CSharp
+        m_MethodName: Switch
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5184252600327775167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,3 +145,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1297d1f6e4a3e614eaad57a173a564ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CellIndividual
+  position: {x: 0, y: 0}
+  cellManager: {fileID: 0}
